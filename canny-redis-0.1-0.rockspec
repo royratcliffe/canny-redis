@@ -1,5 +1,9 @@
 package = "canny-redis"
 version = "0.1-0"
+source = {
+  url = "https://github.com/royratcliffe/canny-redis.git",
+  tag = "main"
+}
 description = {
   license = "MIT"
 }
