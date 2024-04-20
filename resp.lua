@@ -54,13 +54,13 @@ function _M.sendtable(sock, data)
 end
 
 local receive = {
-  ["-"] = function(sock, rest)
+  ["-"] = function(_, rest)
     return false, rest
   end,
-  ["+"] = function(sock, rest)
+  ["+"] = function(_, rest)
     return rest
   end,
-  [":"] = function(sock, rest)
+  [":"] = function(_, rest)
     return tonumber(rest)
   end,
   ["$"] = function(sock, rest)
