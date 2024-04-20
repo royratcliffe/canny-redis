@@ -20,8 +20,8 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    hi = "hi.lua",
-    redis = "redis.lua",
-    resp = "resp.lua"
+    ["canny.hi"] = "hi.lua",
+    ["canny.redis"] = "redis.lua",
+    ["canny.resp"] = "resp.lua"
   }
 }
