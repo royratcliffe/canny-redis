@@ -1,3 +1,9 @@
+--- High-Level Redis
+-- The RESP protocol handles the wire-level connection. For typical day-to-day
+-- use, however, a higher-level interface proves useful. Enter the `hi` module,
+-- providing the `hi.redis` function. It constructs a Redis connection which
+-- clients can call using a table or responds to `send` and `receive` methods.
+-- @module hi
 local _M = {}
 local resp = require "resp"
 local socket = require "socket"

@@ -1,8 +1,31 @@
+--- Redis Wire Protocol.
+-- The Redis database communicates with its clients using RESP. The RESP wire
+-- protocol runs over a bidirectional TCP connection---octets in, octets out.
+--
+-- The wire protocol itself is very simple---a line-based synchronous
+-- send-receive cycle where the connection client sends a command and then
+-- receives its reply. All Redis commands work that way, even if the reply is an
+-- "OK" status or error. Only one exception to this pattern occurs: Subscribing
+-- to a broadcast channel alters the protocol to a continuous receive cycle.
+-- Simple.
+-- @module canny.resp
 local _M = {
   null = {}
 }
 
--- Asserts only if the first return value is nil, not if `false`.
+--- Raises error if `nil`.
+-- The `resp` module provides its own version of `assert`. It exists in order to
+-- trigger errors _without_ stack information about where the error occurs. It
+-- errors with a level of `0` as the second argument meaning "send the error
+-- message only," that is, without the stack traceback.
+--
+-- Asserts only if the first return value is `nil`, not if `false`. Returns all
+-- arguments, including the first, if the first argument does not compare equal
+-- to `nil`.
+--
+-- @param ... Arguments where the first asserts as non-`nil` and the second
+-- supplies the error message if `nil`.
+-- @return All arguments if no error.
 function _M.assert(...)
   if select(1, ...) == nil then
     error(select(2, ...), 0)
