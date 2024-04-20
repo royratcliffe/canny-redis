@@ -1,8 +1,8 @@
 package = "canny-redis"
-version = "0.1-0"
+version = "0.1-1"
 source = {
-  url = "https://github.com/royratcliffe/canny-redis.git",
-  tag = "main"
+  url = "git://github.com/royratcliffe/canny-redis",
+  tag = "v" .. version
 }
 description = {
   summary = "Redis Wire Protocol in Lua",
@@ -18,5 +18,10 @@ dependencies = {
   "lua >= 5.1"
 }
 build = {
-  type = "builtin"
+  type = "builtin",
+  modules = {
+    hi = "hi.lua",
+    redis = "redis.lua",
+    resp = "resp.lua"
+  }
 }
