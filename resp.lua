@@ -1,4 +1,6 @@
-local _M = {}
+local _M = {
+  null = {}
+}
 
 -- Asserts only if the first return value is nil, not if `false`.
 function _M.assert(...)
@@ -40,7 +42,7 @@ local receive = {
   end,
   ["$"] = function(sock, rest)
     local len = tonumber(rest)
-    if len == -1 then return {} end
+    if len == -1 then return _M.null end
     local data = _M.assert(sock:receive(len))
     _M.assert(sock:receive("*l") == "")
     return data
