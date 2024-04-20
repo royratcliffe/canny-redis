@@ -1,8 +1,8 @@
 package = "canny-redis"
-version = "0.1-1"
+version = "0.1-0"
 source = {
-  url = "git://github.com/royratcliffe/canny-redis",
-  tag = "v" .. version
+  url = "https://github.com/royratcliffe/canny-redis/archive/v" .. version .. ".zip",
+  dir = package .. "-" .. version
 }
 description = {
   summary = "Redis Wire Protocol in Lua",
