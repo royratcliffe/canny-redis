@@ -23,5 +23,8 @@ build = {
     ["canny.hi"] = "hi.lua",
     ["canny.redis"] = "redis.lua",
     ["canny.resp"] = "resp.lua"
+  },
+  copy_directories = {
+    "doc"
   }
 }
