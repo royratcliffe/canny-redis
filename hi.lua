@@ -32,7 +32,7 @@ end
 -- Close the Redis interface using the following whenever necessary; it may
 -- never be necessary in practice. The connection automatically closes on error.
 --
---  assert(redis.call.sock:close())
+--    assert(redis.call.sock:close())
 --
 _M.redis = socket.protect(function(url)
     local parsedurl = assert(socket.url.parse(url or os.getenv("REDIS_URL")))
