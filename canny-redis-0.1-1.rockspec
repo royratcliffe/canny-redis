@@ -1,5 +1,5 @@
 package = "canny-redis"
-version = "0.1-0"
+version = "0.1-1"
 source = {
   url = "https://github.com/royratcliffe/canny-redis/archive/v" .. version .. ".zip",
   dir = package .. "-" .. version
