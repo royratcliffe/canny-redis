@@ -7,7 +7,7 @@
 local _M = {}
 local resp = require "resp"
 local socket = require "socket"
-require "LuaSocket.url"
+require "socket.url"
 
 local metat = {
   __index = {
