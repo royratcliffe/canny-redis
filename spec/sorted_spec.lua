@@ -3,7 +3,7 @@ describe("sorted", function()
 
   it("works", function()
     local actual = {}
-    for order, index, value in sorted.pairs({
+    for order, index, value in sorted.ipairs({
         a = 1, b = 2, c = 3, [1] = "a"
       },
       function(left, right)
