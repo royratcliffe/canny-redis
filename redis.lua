@@ -48,6 +48,28 @@ function _M.type(key)
   return _M.call { "TYPE", key }
 end
 
+local function packedextras(...)
+  if select("#", ...) == 1 and type(...) == "table" then
+    local packed = {}
+    for _, field, value in sorted.ipairs(...) do
+      if type(field) == "string" then
+        if type(value) == "string" then
+          table.insert(packed, field)
+          table.insert(packed, value)
+        elseif type(value) == "number" then
+          table.insert(packed, field)
+          table.insert(packed, tostring(value))
+        elseif type(value) == "boolean" and value then
+          table.insert(packed, field)
+        end
+      end
+    end
+    return packed
+  else
+    return { ... }
+  end
+end
+
 --- Scans for keys.
 -- @param ... Additional arguments for scan.
 -- @treturn func Key iteration function.
