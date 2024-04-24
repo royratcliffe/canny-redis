@@ -12,6 +12,7 @@
 -- @license MIT
 local _M = {}
 local hi = require "hi"
+local unpack = unpack or table.unpack
 
 --- Pools a stack of high-level Redis interfaces.
 -- Table remove and insert atomically pops and pushes from the table of
