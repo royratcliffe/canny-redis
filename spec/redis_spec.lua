@@ -3,6 +3,6 @@ describe("redis", function()
 
   it("works", function()
     local lolwut = redis.call { "LOLWUT", "VERSION", tostring(7) }
-    assert.are.equal(type(lolwut), "string")
+    assert.are.equal(lolwut, redis.call("LOLWUT", "VERSION", tostring(7)))
   end)
 end)
