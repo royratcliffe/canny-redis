@@ -45,14 +45,16 @@ end
 --    assert(redis.call.sock:close())
 --
 _M.redis = socket.protect(function(url)
-    local parsedurl = assert(socket.url.parse(url or os.getenv("REDIS_URL")))
-    assert(parsedurl.scheme == "redis")
-    local sock = socket.tcp()
-    local try = _M.newtry(function()
-        sock:close()
-      end)
-    try(sock:connect(parsedurl.host, tonumber(parsedurl.port)))
-    return setmetatable({sock = sock, try = try}, metat)
+  local parsedurl = assert(socket.url.parse(url
+    or os.getenv("REDIS_URL")
+    or "redis://localhost:6379"))
+  assert(parsedurl.scheme == "redis")
+  local sock = socket.tcp()
+  local try = _M.newtry(function()
+    sock:close()
   end)
+  try(sock:connect(parsedurl.host, tonumber(parsedurl.port)))
+  return setmetatable({ sock = sock, try = try }, metat)
+end)
 
 return _M
