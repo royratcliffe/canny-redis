@@ -29,3 +29,6 @@ build = {
     "doc"
   }
 }
+test = {
+  type = "busted"
+}
