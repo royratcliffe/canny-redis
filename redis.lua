@@ -12,6 +12,7 @@
 -- @license MIT
 local _M = {}
 local hi = require "hi"
+local interleaved = require "interleaved"
 local unpack = unpack or table.unpack
 
 --- Pools a stack of high-level Redis interfaces.
@@ -59,6 +60,40 @@ function _M.scan(...)
       cursor, keys = unpack(_M.call { "SCAN", cursor, unpack(args) })
       for _, key in ipairs(keys) do
         coroutine.yield(key)
+      end
+    until cursor == "0"
+  end)
+end
+
+--- Scans a hash.
+-- @param ... Additional arguments for scan.
+-- @treturn func Field iteration function.
+function _M.hscan(key, ...)
+  local args = { ... }
+  return coroutine.wrap(function()
+    local cursor = "0"
+    repeat
+      local fields
+      cursor, fields = unpack(_M.call { "HSCAN", key, cursor, unpack(args) })
+      for _, field, value in interleaved.ipairs(fields) do
+        coroutine.yield(field, value)
+      end
+    until cursor == "0"
+  end)
+end
+
+--- Scans a sorted set.
+-- @param ... Additional arguments for scan.
+-- @treturn func Member iteration function.
+function _M.zscan(key, ...)
+  local args = { ... }
+  return coroutine.wrap(function()
+    local cursor = "0"
+    repeat
+      local members
+      cursor, members = unpack(_M.call { "ZSCAN", key, cursor, unpack(args) })
+      for _, member, score in interleaved.ipairs(members) do
+        coroutine.yield(member, tonumber(score))
       end
     until cursor == "0"
   end)
