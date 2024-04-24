@@ -1,3 +1,4 @@
+rockspec_format = "3.0"
 package = "canny-redis"
 version = "0.1-1"
 source = {
