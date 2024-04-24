@@ -10,7 +10,7 @@ end
 -- First collects the indices.
 -- @tparam tab indexed Index-value pairs.
 -- @tparam ?func comparing Index comparison function.
-function _M.pairs(indexed, comparing)
+function _M.ipairs(indexed, comparing)
   local indices = {}
   for index, _ in pairs(indexed) do
     table.insert(indices, index)
