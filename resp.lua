@@ -37,19 +37,19 @@ function _M.assert(...)
 end
 
 function _M.send(sock, data)
-  return _M[assert("send"..type(data))](sock, data)
+  return _M[assert("send" .. type(data))](sock, data)
 end
 
 function _M.sendnumber(sock, data)
-  return sock:send(":"..data.."\r\n")
+  return sock:send(":" .. data .. "\r\n")
 end
 
 function _M.sendstring(sock, data)
-  return sock:send("$"..#data.."\r\n"..data.."\r\n")
+  return sock:send("$" .. #data .. "\r\n" .. data .. "\r\n")
 end
 
 function _M.sendtable(sock, data)
-  local sent = _M.assert(sock:send("*"..#data.."\r\n"))
+  local sent = _M.assert(sock:send("*" .. #data .. "\r\n"))
   for _, item in ipairs(data) do
     sent = sent + _M.assert(_M.send(sock, item))
   end
