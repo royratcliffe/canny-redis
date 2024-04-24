@@ -74,12 +74,12 @@ end
 -- @param ... Additional arguments for scan.
 -- @treturn func Key iteration function.
 function _M.scan(...)
-  local args = { ... }
+  local extras = packedextras(...)
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
       local keys
-      cursor, keys = unpack(_M.call { "SCAN", cursor, unpack(args) })
+      cursor, keys = unpack(_M.call { "SCAN", cursor, unpack(extras) })
       for _, key in ipairs(keys) do
         coroutine.yield(key)
       end
@@ -96,12 +96,12 @@ end
 -- @param ... Optional extra arguments for scan.
 -- @treturn func Field iteration function.
 function _M.hscan(key, ...)
-  local args = { ... }
+  local extras = packedextras(...)
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
       local fields
-      cursor, fields = unpack(_M.call { "HSCAN", key, cursor, unpack(args) })
+      cursor, fields = unpack(_M.call { "HSCAN", key, cursor, unpack(extras) })
       for _, field, value in interleaved.ipairs(fields) do
         coroutine.yield(field, value)
       end
@@ -113,12 +113,12 @@ end
 -- @param ... Additional arguments for scan.
 -- @treturn func Member iteration function.
 function _M.zscan(key, ...)
-  local args = { ... }
+  local extras = packedextras(...)
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
       local members
-      cursor, members = unpack(_M.call { "ZSCAN", key, cursor, unpack(args) })
+      cursor, members = unpack(_M.call { "ZSCAN", key, cursor, unpack(extras) })
       for _, member, score in interleaved.ipairs(members) do
         coroutine.yield(member, tonumber(score))
       end
