@@ -31,7 +31,7 @@ function _M.call(...)
   return (function(...)
     table.insert(lazycall, redis)
     return ...
-  end)(redis(...))
+  end)(redis(select("#", ...) == 1 and ... or {...}))
 end
 
 --- Builds a colon-delimited Redis key from strings and numbers.
