@@ -1,19 +1,23 @@
 --- Redis call pool.
 -- Performs lazy-call pooling.
+--
+-- This mainly proves practical within a co-routine threading environment but
+-- also proves useful for scenarios where the architecture wants a more implied
+-- connection, implied by the `REDIS_URL` environment variable and does not want
+-- to retain a specific connection. Subscription connections do not suit this
+-- mode of operation.
 -- @module redis
 local _M = {}
 local hi = require "hi"
 
 --- Pools a stack of high-level Redis interfaces.
+-- Table remove and insert atomically pops and pushes from the table of
+-- high-level Redis interfaces.
 local lazycall = {}
 
 --- Calls Redis.
 -- Takes or creates a pooled Redis high-level interface, performs a single call
 -- then returns the Redis interface to the pool ready for the next caller.
---
--- This only works within a co-routine threading environment. Table remove and
--- insert atomically pops and pushes from the table of high-level Redis
--- interfaces.
 --
 -- Creating a Redis interface throws an error if the Redis server fails to
 -- connect. It reports an "host not found" error message in the log. A
