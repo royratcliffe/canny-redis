@@ -7,6 +7,9 @@
 -- to retain a specific connection. Subscription connections do not suit this
 -- mode of operation.
 -- @module redis
+-- @author Roy Ratcliffe <roy@ratcliffe.me>
+-- @copyright 2024
+-- @license MIT
 local _M = {}
 local hi = require "hi"
 
