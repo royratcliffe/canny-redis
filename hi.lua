@@ -4,6 +4,9 @@
 -- providing the `hi.redis` function. It constructs a Redis connection which
 -- clients can call using a table or responds to `send` and `receive` methods.
 -- @module hi
+-- @author Roy Ratcliffe <roy@ratcliffe.me>
+-- @copyright 2023, 2024
+-- @license MIT
 local _M = {}
 local resp = require "resp"
 local socket = require "socket"

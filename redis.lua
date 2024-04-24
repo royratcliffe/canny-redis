@@ -8,7 +8,7 @@
 -- mode of operation.
 -- @module redis
 -- @author Roy Ratcliffe <roy@ratcliffe.me>
--- @copyright 2024
+-- @copyright 2023, 2024
 -- @license MIT
 local _M = {}
 local hi = require "hi"

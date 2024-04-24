@@ -9,6 +9,9 @@
 -- to a broadcast channel alters the protocol to a continuous receive cycle.
 -- Simple.
 -- @module canny.resp
+-- @author Roy Ratcliffe <roy@ratcliffe.me>
+-- @copyright 2023, 2024
+-- @license MIT
 local _M = {
   null = {}
 }
