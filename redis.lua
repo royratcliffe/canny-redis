@@ -66,7 +66,12 @@ function _M.scan(...)
 end
 
 --- Scans a hash.
--- @param ... Additional arguments for scan.
+--
+-- Do not use `NOVALUES` in the extra arguments. The iteration automatically
+-- undoes the interleaved field-value pairs. Hash scanning without values
+-- delivers the fields only.
+--
+-- @param ... Optional extra arguments for scan.
 -- @treturn func Field iteration function.
 function _M.hscan(key, ...)
   local args = { ... }
