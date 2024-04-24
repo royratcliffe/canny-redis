@@ -15,16 +15,17 @@ require "socket.url"
 local metat = {
   __index = {
     send = function(redis, ...)
-      return redis.try(resp.send(redis.sock, ...))
+      return redis.try(resp.send(redis.sock,
+        select("#", ...) == 1 and ... or { ... }))
     end,
     receive = function(redis)
       return redis.try(resp.receive(redis.sock))
     end
   },
   __call = socket.protect(function(redis, ...)
-      redis:send(...)
-      return redis:receive()
-    end)
+    redis:send(...)
+    return redis:receive()
+  end)
 }
 
 function _M.newtry(finaliser)
