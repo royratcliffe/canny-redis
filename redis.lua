@@ -98,6 +98,7 @@ end
 -- does *not* sort the fields. Redis does not guarantee non-duplication during
 -- the scan.
 --
+-- @tparam string key Key of hash to scan.
 -- @param ... Optional extra arguments for scan.
 -- @treturn func Field iteration function.
 function _M.hscan(key, ...)
@@ -123,6 +124,7 @@ end
 
 --- Scans a set.
 -- The set scan has undefined order.
+-- @tparam string key Key of unsorted set to scan.
 -- @param ... Extra arguments for scan.
 -- @treturn func Member iteration function.
 function _M.sscan(key, ...)
@@ -140,6 +142,7 @@ function _M.sscan(key, ...)
 end
 
 --- Scans a sorted set.
+-- @tparam string key Key of sorted set to scan.
 -- @param ... Additional arguments for scan.
 -- @treturn func Member iteration function.
 function _M.zscan(key, ...)

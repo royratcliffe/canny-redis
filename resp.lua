@@ -52,7 +52,7 @@ end
 
 --- Sends a bulk string to a Redis server.
 -- @param sock Socket to use for sending.
--- @tparam str String to send.
+-- @tparam string data String to send.
 function _M.sendstring(sock, data)
   return sock:send("$" .. #data .. "\r\n" .. data .. "\r\n")
 end

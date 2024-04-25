@@ -7,7 +7,7 @@ local _M = {}
 
 --- Next index, first and second values.
 -- @tparam tab indexed Array of interleaved pairs.
--- @tparam index Current index.
+-- @tparam number index Current index.
 -- @treturn number Next index.
 -- @return First interleaved value.
 -- @return Second interleaved value.
