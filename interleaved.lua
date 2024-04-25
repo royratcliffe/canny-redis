@@ -47,8 +47,8 @@ end
 function _M.redo(fields, interleaved)
   interleaved = interleaved or {}
   for field, value in pairs(fields) do
-    table.insert(interleaved, tostring(field))
-    table.insert(interleaved, tostring(value))
+    table.insert(interleaved, field)
+    table.insert(interleaved, value)
   end
   return interleaved
 end
