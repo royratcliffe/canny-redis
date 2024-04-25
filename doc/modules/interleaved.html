@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Canny Redis</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/hi.html">hi</a></li>
+  <li><strong>interleaved</strong></li>
+  <li><a href="../modules/redis.html">redis</a></li>
+  <li><a href="../modules/canny.resp.html">canny.resp</a></li>
+  <li><a href="../modules/sorted.html">sorted</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>interleaved</code></h1>
+<p>Interleaved pairs.</p>
+<p>
+
+</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: 2023, 2024</li>
+        <li><strong>License</strong>: MIT</li>
+        <li><strong>Author</strong>: Roy Ratcliffe <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;r&#111;&#x79;&#64;&#x72;&#97;&#x74;&#99;&#x6c;i&#102;&#x66;&#101;&#x2e;&#109;&#x65;">&#x72;&#111;&#x79;&#64;&#x72;&#97;&#x74;c&#108;&#x69;&#102;&#x66;&#101;&#x2e;&#109;&#x65;</a></li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#inext">inext (indexed, index)</a></td>
+	<td class="summary">Next index, first and second values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ipairs">ipairs (indexed)</a></td>
+	<td class="summary">Iterates an interleaved array of pairs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#undo">undo (interleaved, fields)</a></td>
+	<td class="summary">Undoes interleaved field and value pairs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#redo">redo (fields, interleaved)</a></td>
+	<td class="summary">Redoes field interleaving.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "inext"></a>
+    <strong>inext (indexed, index)</strong>
+    </dt>
+    <dd>
+    Next index, first and second values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">indexed</span>
+            <span class="types"><span class="type">tab</span></span>
+         Array of interleaved pairs.
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         Current index.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Next index.</li>
+        <li>
+        First interleaved value.</li>
+        <li>
+        Second interleaved value.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ipairs"></a>
+    <strong>ipairs (indexed)</strong>
+    </dt>
+    <dd>
+    Iterates an interleaved array of pairs.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">indexed</span>
+            <span class="types"><span class="type">tab</span></span>
+         Array of interleaved pairs.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">func</span></span>
+        Answers the next index, first and second values.</li>
+        <li>
+           <span class="types"><span class="type">tab</span></span>
+        Array of pairs to iterate.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Initial iteration index of zero.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "undo"></a>
+    <strong>undo (interleaved, fields)</strong>
+    </dt>
+    <dd>
+    Undoes interleaved field and value pairs.
+ Collating the interleaved pairs throws away the order of the fields. The
+ fields become key-value pairs within a Lua table without prescribed key
+ ordering and without <code>nil</code> values; assigning <code>nil</code> to a key removes it.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">interleaved</span>
+            <span class="types"><span class="type">tab</span></span>
+         An array of interleaved field values.
+        </li>
+        <li><span class="parameter">fields</span>
+            <span class="types">optional <span class="type">tab</span></span>
+         Optional table of fields.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">tab</span></span>
+        Table of field-value pairs, unordered.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "redo"></a>
+    <strong>redo (fields, interleaved)</strong>
+    </dt>
+    <dd>
+    Redoes field interleaving.
+ This has limited utility when ordering matters. Lua cannot guarantee the
+ order of the interleaved field pairs. Value always follows the field but the
+ order of each pair depends on Lua's unsorted presentation of pairs. When
+ order does matter, apply order-critical pairs separately.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fields</span>
+            <span class="types"><span class="type">tab</span></span>
+         Table of fields.
+        </li>
+        <li><span class="parameter">interleaved</span>
+            <span class="types">optional <span class="type">tab</span></span>
+         Optional array of interleaved field values.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">tab</span></span>
+        Interleaved array of field-value pairs, unordered.
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
+<i style="float:right;">Last updated 2024-04-25 08:31:35 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

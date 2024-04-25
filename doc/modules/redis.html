@@ -41,8 +41,10 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/hi.html">hi</a></li>
+  <li><a href="../modules/interleaved.html">interleaved</a></li>
   <li><strong>redis</strong></li>
   <li><a href="../modules/canny.resp.html">canny.resp</a></li>
+  <li><a href="../modules/sorted.html">sorted</a></li>
 </ul>
 
 </div>
@@ -52,6 +54,18 @@
 <h1>Module <code>redis</code></h1>
 <p>Redis call pool.</p>
 <p> Performs lazy-call pooling.</p>
+
+<p> This mainly proves practical within a co-routine threading environment but
+ also proves useful for scenarios where the architecture wants a more implied
+ connection, implied by the <code>REDIS_URL</code> environment variable and does not want
+ to retain a specific connection. Subscription connections do not suit this
+ mode of operation.</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: 2023, 2024</li>
+        <li><strong>License</strong>: MIT</li>
+        <li><strong>Author</strong>: Roy Ratcliffe <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;r&#111;&#x79;&#64;&#x72;&#97;&#x74;&#99;&#x6c;i&#102;&#x66;&#101;&#x2e;&#109;&#x65;">&#x72;&#111;&#x79;&#64;&#x72;&#97;&#x74;c&#108;&#x69;&#102;&#x66;&#101;&#x2e;&#109;&#x65;</a></li>
+    </ul>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -71,6 +85,18 @@
 	<tr>
 	<td class="name" nowrap><a href="#scan">scan (...)</a></td>
 	<td class="summary">Scans for keys.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hscan">hscan (key, ...)</a></td>
+	<td class="summary">Scans a hash.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sscan">sscan (key, ...)</a></td>
+	<td class="summary">Scans a set.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#zscan">zscan (key, ...)</a></td>
+	<td class="summary">Scans a sorted set.</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -96,10 +122,6 @@
     Calls Redis.
  Takes or creates a pooled Redis high-level interface, performs a single call
  then returns the Redis interface to the pool ready for the next caller.</p>
-
-<p> This only works within a co-routine threading environment. Table remove and
- insert atomically pops and pushes from the table of high-level Redis
- interfaces.</p>
 
 <p> Creating a Redis interface throws an error if the Redis server fails to
  connect. It reports an "host not found" error message in the log. A
@@ -164,7 +186,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
         Type of key else <code>none</code> if the key does not exist.
     </ol>
 
@@ -198,6 +220,105 @@
 
 
 </dd>
+    <dt>
+    <a name = "hscan"></a>
+    <strong>hscan (key, ...)</strong>
+    </dt>
+    <dd>
+    Scans a hash. </p>
+
+<p> Do not use <code>NOVALUES</code> in the extra arguments. The iteration automatically
+ undoes the interleaved field-value pairs. Hash scanning without values
+ delivers the fields only.</p>
+
+<p> The iterator delivers the fields in values in the same order as the scan. It
+ does <em>not</em> sort the fields. Redis does not guarantee non-duplication during
+ the scan.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Key of hash to scan.
+        </li>
+        <li><span class="parameter">...</span>
+         Optional extra arguments for scan.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">func</span></span>
+        Field iteration function.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sscan"></a>
+    <strong>sscan (key, ...)</strong>
+    </dt>
+    <dd>
+    Scans a set.
+ The set scan has undefined order.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Key of unsorted set to scan.
+        </li>
+        <li><span class="parameter">...</span>
+         Extra arguments for scan.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">func</span></span>
+        Member iteration function.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "zscan"></a>
+    <strong>zscan (key, ...)</strong>
+    </dt>
+    <dd>
+    Scans a sorted set.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Key of sorted set to scan.
+        </li>
+        <li><span class="parameter">...</span>
+         Additional arguments for scan.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">func</span></span>
+        Member iteration function.
+    </ol>
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Tables"></a>Tables</h2>
 
@@ -208,6 +329,8 @@
     </dt>
     <dd>
     Pools a stack of high-level Redis interfaces.
+ Table remove and insert atomically pops and pushes from the table of
+ high-level Redis interfaces.
 
 
 
@@ -223,7 +346,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-04-20 21:10:35 </i>
+<i style="float:right;">Last updated 2024-04-25 08:31:35 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
