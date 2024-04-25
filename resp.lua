@@ -8,7 +8,7 @@
 -- "OK" status or error. Only one exception to this pattern occurs: Subscribing
 -- to a broadcast channel alters the protocol to a continuous receive cycle.
 -- Simple.
--- @module canny.resp
+-- @module resp
 -- @author Roy Ratcliffe <roy@ratcliffe.me>
 -- @copyright 2023, 2024
 -- @license MIT
