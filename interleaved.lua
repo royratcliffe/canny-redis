@@ -1,3 +1,8 @@
+--- Interleaved pairs.
+-- @module interleaved
+-- @author Roy Ratcliffe <roy@ratcliffe.me>
+-- @copyright 2023, 2024
+-- @license MIT
 local _M = {}
 
 --- Next index, first and second values.
@@ -20,7 +25,6 @@ function _M.ipairs(indexed)
 end
 
 --- Undoes interleaved field and value pairs.
---
 -- Collating the interleaved pairs throws away the order of the fields. The
 -- fields become key-value pairs within a Lua table without prescribed key
 -- ordering and without `nil` values; assigning `nil` to a key removes it.

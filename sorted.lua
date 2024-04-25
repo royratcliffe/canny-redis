@@ -1,3 +1,8 @@
+--- Sorted pairs.
+-- @module sorted
+-- @author Roy Ratcliffe <roy@ratcliffe.me>
+-- @copyright 2023, 2024
+-- @license MIT
 local _M = {}
 
 local function ordered(sorted, ordering)
