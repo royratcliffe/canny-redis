@@ -12,6 +12,7 @@
 -- @license MIT
 local _M = {}
 local hi = require "hi"
+local sorted = require "sorted"
 local interleaved = require "interleaved"
 local unpack = unpack or table.unpack
 
@@ -93,16 +94,27 @@ end
 -- undoes the interleaved field-value pairs. Hash scanning without values
 -- delivers the fields only.
 --
+-- The iterator delivers the fields in values in the same order as the scan. It
+-- does *not* sort the fields. Redis does not guarantee non-duplication during
+-- the scan.
+--
 -- @param ... Optional extra arguments for scan.
 -- @treturn func Field iteration function.
 function _M.hscan(key, ...)
   local extras = packextras(...)
+  local pairing = interleaved.ipairs
+  for _, extra in ipairs(extras) do
+    if extra == "NOVALUES" then
+      pairing = ipairs
+      break
+    end
+  end
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
       local fields
       cursor, fields = unpack(_M.call { "HSCAN", key, cursor, unpack(extras) })
-      for _, field, value in interleaved.ipairs(fields) do
+      for _, field, value in pairing(fields) do
         coroutine.yield(field, value)
       end
     until cursor == "0"
