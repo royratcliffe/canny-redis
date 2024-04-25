@@ -48,7 +48,7 @@ function _M.type(key)
   return _M.call { "TYPE", key }
 end
 
-local function packedextras(...)
+local function packextras(...)
   if select("#", ...) == 1 and type(...) == "table" then
     local packed = {}
     for _, field, value in sorted.ipairs(...) do
@@ -74,7 +74,7 @@ end
 -- @param ... Additional arguments for scan.
 -- @treturn func Key iteration function.
 function _M.scan(...)
-  local extras = packedextras(...)
+  local extras = packextras(...)
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
@@ -96,7 +96,7 @@ end
 -- @param ... Optional extra arguments for scan.
 -- @treturn func Field iteration function.
 function _M.hscan(key, ...)
-  local extras = packedextras(...)
+  local extras = packextras(...)
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
@@ -113,7 +113,7 @@ end
 -- @param ... Additional arguments for scan.
 -- @treturn func Member iteration function.
 function _M.zscan(key, ...)
-  local extras = packedextras(...)
+  local extras = packextras(...)
   return coroutine.wrap(function()
     local cursor = "0"
     repeat
