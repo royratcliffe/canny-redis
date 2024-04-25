@@ -121,6 +121,24 @@ function _M.hscan(key, ...)
   end)
 end
 
+--- Scans a set.
+-- The set scan has undefined order.
+-- @param ... Extra arguments for scan.
+-- @treturn func Member iteration function.
+function _M.sscan(key, ...)
+  local extras = packextras(...)
+  return coroutine.wrap(function()
+    local cursor = "0"
+    repeat
+      local members
+      cursor, members = unpack(_M.call { "SSCAN", key, cursor, unpack(extras) })
+      for _, member in ipairs(members) do
+        coroutine.yield(member)
+      end
+    until cursor == "0"
+  end)
+end
+
 --- Scans a sorted set.
 -- @param ... Additional arguments for scan.
 -- @treturn func Member iteration function.
