@@ -24,7 +24,9 @@ build = {
   modules = {
     ["canny.hi"] = "hi.lua",
     ["canny.redis"] = "redis.lua",
-    ["canny.resp"] = "resp.lua"
+    ["canny.resp"] = "resp.lua",
+    ["canny.interleaved"] = "interleaved.lua",
+    ["canny.sorted"] = "sorted.lua"
   },
   copy_directories = {
     "doc"
