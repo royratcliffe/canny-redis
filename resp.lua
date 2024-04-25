@@ -36,18 +36,30 @@ function _M.assert(...)
   return ...
 end
 
+--- Sends data according to type to a Redis server.
+-- @param sock Socket to use for sending.
+-- @param data Data to send.
 function _M.send(sock, data)
   return _M[assert("send" .. type(data))](sock, data)
 end
 
+--- Sends a number to a Redis server.
+-- @param sock Socket to use for sending.
+-- @tparam number data Number to send.
 function _M.sendnumber(sock, data)
   return sock:send(":" .. data .. "\r\n")
 end
 
+--- Sends a bulk string to a Redis server.
+-- @param sock Socket to use for sending.
+-- @tparam str String to send.
 function _M.sendstring(sock, data)
   return sock:send("$" .. #data .. "\r\n" .. data .. "\r\n")
 end
 
+--- Sends an array to a Redis server.
+-- @param sock Socket to use for sending.
+-- @tparam tab data Array to send.
 function _M.sendtable(sock, data)
   local sent = _M.assert(sock:send("*" .. #data .. "\r\n"))
   for _, item in ipairs(data) do
@@ -84,6 +96,14 @@ local receive = {
   end
 }
 
+--- Receives data from a Redis server.
+-- The data has one of types. The initial character determines the type.
+-- * Error
+-- * Simple string
+-- * Number, integer or floating-point
+-- * Bulk string
+-- * Null encoded as a bulk string of length -1
+-- * Array of items
 function _M.receive(sock)
   local data = _M.assert(sock:receive("*l"))
   return _M.assert(receive[data:sub(1, 1)])(sock, data:sub(2))
