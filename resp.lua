@@ -82,6 +82,9 @@ local receive = {
     local len = tonumber(rest)
     if len < 0 then return _M.null end
     local data = _M.assert(sock:receive(len))
+    -- Receive up to the end of the line, asserting that there was nothing up to
+    -- the end of the line. In other words, the end-of-line terminators
+    -- immediately follow the received number of bytes.
     _M.assert(sock:receive("*l") == "")
     return data
   end,
