@@ -57,9 +57,9 @@ function _M.sendstring(sock, data)
   return sock:send("$" .. #data .. "\r\n" .. data .. "\r\n")
 end
 
---- Sends an array to a Redis server.
+--- Sends an array of items to a Redis server.
 -- @param sock Socket to use for sending.
--- @tparam tab data Array to send.
+-- @tparam tab data Array of items to send.
 function _M.sendtable(sock, data)
   local sent = _M.assert(sock:send("*" .. #data .. "\r\n"))
   for _, item in ipairs(data) do
