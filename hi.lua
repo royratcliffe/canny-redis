@@ -16,7 +16,7 @@ local metat = {
   __index = {
     send = function(redis, ...)
       return redis.try(resp.send(redis.sock,
-        select("#", ...) == 1 and ... or { ... }))
+        select("#", ...) == 1 and (...) or { ... }))
     end,
     receive = function(redis)
       return redis.try(resp.receive(redis.sock))
