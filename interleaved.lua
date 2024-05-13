@@ -12,7 +12,8 @@ local _M = {}
 -- @return First interleaved value.
 -- @return Second interleaved value.
 function _M.inext(indexed, index)
-  return index + 2, indexed[index + 1], indexed[index + 2]
+  local first = indexed[index + 1]
+  return first and index + 2, first, indexed[index + 2]
 end
 
 --- Iterates an interleaved array of pairs.
