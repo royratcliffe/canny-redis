@@ -1,3 +1,4 @@
+--- Redis key sugar.
 -- What to call the meta-table? If `_M` is the module table then why not `__M`?
 -- Add an extra underscore prefix. Use double underscores for all meta-tables.
 local __M = {}
@@ -7,18 +8,22 @@ local unpack = unpack or table.unpack
 
 local __KEY = {}
 
+--- Redis super-key.
 -- The module-level meta-index constructs a new key, or a new array using the
 -- given index and a meta-table of `__KEY`.
 function __M:__index(index)
   return setmetatable({ __index = index }, __KEY)
 end
 
+--- Redis sub-key.
 -- Indexing a key creates a new sub-key. The new key references the original.
 -- Mutating the original (nothing prevents it) affects all its descendants.
+-- @param index Sub-key.
 function __KEY:__index(index)
   return setmetatable({ __indexed = self, __index = index }, __KEY)
 end
 
+--- Redis key to string.
 -- Operates recursively.
 --
 -- Important to unpack `self`. Do not use `__index`. The following would fail
@@ -31,6 +36,8 @@ function __KEY:__tostring()
   return indexed and tostring(indexed) .. ":" .. index or tostring(index)
 end
 
+--- Concatenates key to other value.
+-- @param other String or other type that converts to string.
 function __KEY:__concat(other)
   return tostring(self) .. tostring(other)
 end
