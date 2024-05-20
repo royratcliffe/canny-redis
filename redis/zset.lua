@@ -15,6 +15,7 @@
 --
 -- Be careful when adding packed tables. Table packing is not deterministic
 -- because the order of table iteration packing works by unsorted iteration.
+-- Hence, two member values may not necessarily intersect even though the same.
 local _M = {}
 local resp = require "resp"
 local redis = require "redis"
