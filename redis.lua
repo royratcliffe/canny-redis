@@ -72,6 +72,8 @@ local function packextras(...)
 end
 
 --- Scans for keys.
+-- See [Redis scan command](https://redis.io/docs/latest/commands/scan) for
+-- details.
 -- @param ... Additional arguments for scan.
 -- @treturn func Key iteration function.
 function _M.scan(...)
