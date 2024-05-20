@@ -17,6 +17,9 @@ function _M.inext(indexed, index)
 end
 
 --- Iterates an interleaved array of pairs.
+-- See [Lua's Semantics of the Generic `for`](https://www.lua.org/pil/7.2.html)
+-- for details.
+-- @see inext
 -- @tparam tab indexed Array of interleaved pairs.
 -- @treturn func Answers the next index, first and second values.
 -- @treturn tab Array of pairs to iterate.
