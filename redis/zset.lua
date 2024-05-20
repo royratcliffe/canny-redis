@@ -1,4 +1,18 @@
 --- Redis sorted sets.
+--
+-- Take an example. Reify a sorted set. Add two members: hello scores `1`, world
+-- scores `1`. Notice that the two members initially have the same score. Bump
+-- the world's score by `1.1`, making it `2.1` at the server. Finally, iterate
+-- the set, printing each score and value.
+--
+--    local redis_key = require "redis.key"
+--    local myzset = redis_key.myzset("zset")
+--    myzset:add{hello = 1, world = 1}
+--    myzset:incrby(1.1, "world")
+--    for score, value in myzset() do
+--      print(score, value)
+--    end
+--
 -- Be careful when adding packed tables. Table packing is not deterministic
 -- because the order of table iteration packing works by unsorted iteration.
 local _M = {}
