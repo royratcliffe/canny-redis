@@ -12,22 +12,6 @@ local resp = require "resp"
 local socket = require "socket"
 require "socket.url"
 
-local metat = {
-  __index = {
-    send = function(redis, ...)
-      return redis.try(resp.send(redis.sock,
-        select("#", ...) == 1 and (...) or { ... }))
-    end,
-    receive = function(redis)
-      return redis.try(resp.receive(redis.sock))
-    end
-  },
-  __call = socket.protect(function(redis, ...)
-    redis:send(...)
-    return redis:receive()
-  end)
-}
-
 --- Answers an assertion with finaliser function.
 -- Creates a function that acts like `assert` but with one additional useful
 -- feature: it invokes a finaliser function just before raising an error.
@@ -42,6 +26,22 @@ function _M.newtry(finaliser)
     return ...
   end
 end
+
+local __REDIS = {
+  __index = {
+    send = function(redis, ...)
+      return redis.try(resp.send(redis.sock,
+        select("#", ...) == 1 and (...) or { ... }))
+    end,
+    receive = function(redis)
+      return redis.try(resp.receive(redis.sock))
+    end
+  },
+  __call = socket.protect(function(redis, ...)
+    redis:send(...)
+    return redis:receive()
+  end)
+}
 
 --- Creates a high-level Redis interface.
 -- Close the Redis interface using the following whenever necessary; it may
@@ -65,7 +65,7 @@ _M.redis = socket.protect(function(url)
     sock:close()
   end)
   try(sock:connect(parsedurl.host, tonumber(parsedurl.port)))
-  return setmetatable({ sock = sock, try = try }, metat)
+  return setmetatable({ sock = sock, try = try }, __REDIS)
 end)
 
 return _M
