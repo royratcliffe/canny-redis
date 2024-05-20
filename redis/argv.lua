@@ -29,6 +29,7 @@ function __ARGV__index:select(...)
       self:insert(arg, true)
     end
   end
+  return self
 end
 
 function _M.new(...)
