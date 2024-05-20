@@ -1,3 +1,8 @@
+--- Redis argument vector.
+-- @module redis.argv
+-- @author Roy Ratcliffe <roy@ratcliffe.me>
+-- @copyright 2024
+-- @license MIT
 local _M = {}
 
 local __ARGV__index = {}
