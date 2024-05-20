@@ -11,6 +11,10 @@ local __KEY = {}
 --- Redis super-key.
 -- The module-level meta-index constructs a new key, or a new array using the
 -- given index and a meta-table of `__KEY`.
+--
+-- Does *not* answer the object itself but only its key. Use the `__call`
+-- meta-method to reify the key to its database object: string, hash, set or
+-- sorted set.
 function __M:__index(index)
   return setmetatable({ __index = index }, __KEY)
 end
