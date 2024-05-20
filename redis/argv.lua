@@ -32,8 +32,10 @@ function __ARGV__index:select(...)
   return self
 end
 
-function _M.new(...)
-  return setmetatable({}, __ARGV)
+local __M = {}
+
+function __M.__call(...)
+  return setmetatable({}, __ARGV):select(...)
 end
 
-return _M
+return setmetatable(_M, __M)
