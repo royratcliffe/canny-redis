@@ -37,6 +37,17 @@ function __ARGV__index:select(...)
   return self
 end
 
+--- Finds an argument's vector index.
+-- @tparam string arg String argument to find.
+-- @treturn ?integer Index of argument if found.
+function __ARGV__index:index(arg)
+  for index, value in ipairs(self) do
+    if value == arg then
+      return index
+    end
+  end
+end
+
 local __M = {}
 
 function __M.__call(...)
