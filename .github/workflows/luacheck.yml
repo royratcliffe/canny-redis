@@ -28,7 +28,7 @@ jobs:
 
       - name: luacheck
         run: |
-          luacheck .
+          luacheck --exclude-files .luarocks .
 
       - name: test
         run: |
