@@ -11,13 +11,14 @@ jobs:
       - uses: leafo/gh-actions-lua@v10
       - uses: leafo/gh-actions-luarocks@v4
 
+      - name: build
+        run: |
+          luarocks install luacheck
+          luarocks install busted
+
       - name: luacheck
         run: |
           luacheck
-
-      - name: build
-        run: |
-          luarocks install busted
 
       - name: test
         run: |
