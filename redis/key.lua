@@ -3,8 +3,6 @@
 -- Add an extra underscore prefix. Use double underscores for all meta-tables.
 local __M = {}
 local _M = setmetatable({}, __M)
-local REDIS = require "redis"
-local unpack = unpack or table.unpack
 
 local __KEY = {}
 
