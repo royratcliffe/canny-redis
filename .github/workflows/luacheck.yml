@@ -28,7 +28,7 @@ jobs:
 
       - name: luacheck
         run: |
-          luacheck --exclude-files .luarocks .
+          luacheck *.lua redis/*.lua spec/*.lua
 
       - name: test
         run: |
