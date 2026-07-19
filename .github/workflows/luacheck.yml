@@ -18,7 +18,7 @@ jobs:
 
       - name: luacheck
         run: |
-          luacheck
+          luacheck .
 
       - name: test
         run: |
