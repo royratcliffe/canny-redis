@@ -28,7 +28,7 @@ describe("redis", function()
 
     it("hash without values", function()
       redis.call("HSET", key, "field", "value")
-      local fields = redis.hscan("key", { NOVALUES = true })
+      local fields = redis.hscan(key, { NOVALUES = true })
       assert.are.equal("field", fields())
       assert.is_nil(fields())
     end)
