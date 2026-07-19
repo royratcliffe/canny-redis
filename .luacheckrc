@@ -1,4 +1,4 @@
-std = "lua51"
+std = "lua54"
 
 -- Busted globals used in spec files.
 globals = {
