@@ -90,6 +90,7 @@ local receive = {
   end,
   ["*"] = function(sock, rest)
     local len = tonumber(rest)
+    if len < 0 then return _M.null end
     local data = {}
     for index = 1, len do
       local item = _M.assert(_M.receive(sock))
