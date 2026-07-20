@@ -9,7 +9,7 @@
 --    local myzset = redis_key.myzset("zset")
 --    myzset:add{hello = 1, world = 1}
 --    myzset:incrby(1.1, "world")
---    for score, value in myzset() do
+--    for value, score in myzset() do
 --      print(score, value)
 --    end
 --
