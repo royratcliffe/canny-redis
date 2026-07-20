@@ -12,10 +12,14 @@ local _M = {}
 -- @return First interleaved value.
 -- @return Second interleaved value.
 function _M.inext(indexed, index)
-  return index + 2, indexed[index + 1], indexed[index + 2]
+  local first, second = indexed[index + 1], indexed[index + 2]
+  return (first ~= nil or second ~= nil) and index + 2 or nil, first, second
 end
 
 --- Iterates an interleaved array of pairs.
+-- See [Lua's Semantics of the Generic `for`](https://www.lua.org/pil/7.2.html)
+-- for details.
+-- @see inext
 -- @tparam tab indexed Array of interleaved pairs.
 -- @treturn func Answers the next index, first and second values.
 -- @treturn tab Array of pairs to iterate.

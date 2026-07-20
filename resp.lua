@@ -57,9 +57,9 @@ function _M.sendstring(sock, data)
   return sock:send("$" .. #data .. "\r\n" .. data .. "\r\n")
 end
 
---- Sends an array to a Redis server.
+--- Sends an array of items to a Redis server.
 -- @param sock Socket to use for sending.
--- @tparam tab data Array to send.
+-- @tparam tab data Array of items to send.
 function _M.sendtable(sock, data)
   local sent = _M.assert(sock:send("*" .. #data .. "\r\n"))
   for _, item in ipairs(data) do
@@ -82,11 +82,17 @@ local receive = {
     local len = tonumber(rest)
     if len < 0 then return _M.null end
     local data = _M.assert(sock:receive(len))
-    _M.assert(sock:receive("*l") == "")
+    -- Receive up to the end of the line, asserting that there was nothing up to
+    -- the end of the line. In other words, the end-of-line terminators
+    -- immediately follow the received number of bytes.
+    if sock:receive("*l") ~= "" then
+      error("protocol error: expected end of line after bulk string", 0)
+    end
     return data
   end,
   ["*"] = function(sock, rest)
     local len = tonumber(rest)
+    if len < 0 then return _M.null end
     local data = {}
     for index = 1, len do
       local item = _M.assert(_M.receive(sock))

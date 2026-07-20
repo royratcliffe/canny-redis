@@ -14,7 +14,7 @@ local _M = {}
 local hi = require "hi"
 local sorted = require "sorted"
 local interleaved = require "interleaved"
-local unpack = unpack or table.unpack
+local unpack = unpack or table.unpack -- for Lua 5.2+
 
 --- Pools a stack of high-level Redis interfaces.
 -- Table remove and insert atomically pops and pushes from the table of
@@ -72,6 +72,8 @@ local function packextras(...)
 end
 
 --- Scans for keys.
+-- See [Redis scan command](https://redis.io/docs/latest/commands/scan) for
+-- details.
 -- @param ... Additional arguments for scan.
 -- @treturn func Key iteration function.
 function _M.scan(...)

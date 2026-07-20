@@ -28,9 +28,9 @@ describe("redis", function()
 
     it("hash without values", function()
       redis.call("HSET", key, "field", "value")
-      assert.has_error(function()
-        redis.hscan("key", { NOVALUES = true })()
-      end, "ERR syntax error")
+      local fields = redis.hscan(key, { NOVALUES = true })
+      assert.are.equal("field", fields())
+      assert.is_nil(fields())
     end)
 
     it("unordered set", function()
