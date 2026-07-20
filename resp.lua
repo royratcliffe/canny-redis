@@ -85,7 +85,9 @@ local receive = {
     -- Receive up to the end of the line, asserting that there was nothing up to
     -- the end of the line. In other words, the end-of-line terminators
     -- immediately follow the received number of bytes.
-    _M.assert(sock:receive("*l") == "")
+    if sock:receive("*l") ~= "" then
+      error("protocol error: expected end of line after bulk string", 0)
+    end
     return data
   end,
   ["*"] = function(sock, rest)
